@@ -1,0 +1,105 @@
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #0f172a;
+    color: white;
+}
+
+
+
+.admin-container {
+    display: flex;
+    height: 100vh;
+}
+
+
+.admin {
+    width: 250px;
+    background-color: #111c34;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin ul {
+    list-style: none;
+    padding: 0;
+}
+
+.admin ul li {
+    padding: 12px 15px;
+    margin: 8px 0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.admin ul li:hover {
+    background-color: #1e293b;
+}
+
+
+.content {
+    flex: 1;
+    padding: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    background-color: #0f172a;
+}
+
+
+.card {
+    background: #1e293b;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.1);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+}
+
+.card h1 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.card h3 {
+    font-weight: normal;
+    color: #cbd5e1;
+}
+
+
+.risk-score {
+    font-size: 60px;
+    color: #ef4444;
+    font-weight: bold;
+}
+
+
+.card ul {
+    padding-left: 20px;
+}
+
+.card ul li {
+    margin: 8px 0;
+}
+
+
+@media (max-width: 900px) {
+    .content {
+        grid-template-columns: 1fr;
+    }
+
+    .admin {
+        width: 200px;
+    }
+}
+h1 {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
