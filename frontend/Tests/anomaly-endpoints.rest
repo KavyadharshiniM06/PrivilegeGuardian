@@ -1,0 +1,84 @@
+### Test Anomaly Detection Engine
+### Base URL: http://localhost:4000/api
+
+### Detect anomaly for a single event
+POST http://localhost:4000/api/anomaly/detect
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "action": "write",
+  "file": "/etc/config",
+  "status": "denied"
+}
+
+### Get baseline for a specific user
+GET http://localhost:4000/api/anomaly/baselines/testuser
+
+### Get all user baselines
+GET http://localhost:4000/api/anomaly/all-baselines
+
+### Reset baseline for specific user
+POST http://localhost:4000/api/anomaly/reset/testuser
+Content-Type: application/json
+
+{}
+
+### Reset all baselines
+POST http://localhost:4000/api/anomaly/reset-all
+Content-Type: application/json
+
+{}
+
+### Full event pipeline with anomaly detection
+POST http://localhost:4000/api/events/process
+Content-Type: application/json
+
+{
+  "raw_event": "{\"username\":\"newuser\",\"action\":\"delete\",\"file\":\"/etc/shadow\",\"status\":\"denied\"}"
+}
+
+### Process sequence to see anomaly scores evolve
+### 1st event - NEW_USER signal triggers (0.60 anomaly score)
+POST http://localhost:4000/api/anomaly/detect
+Content-Type: application/json
+
+{
+  "username": "user1",
+  "action": "read"
+}
+
+### 2nd event - same user, same action (baseline established)
+POST http://localhost:4000/api/anomaly/detect
+Content-Type: application/json
+
+{
+  "username": "user1",
+  "action": "read"
+}
+
+### 3rd event - RARE_ACTION signal triggers (0.40 anomaly score)
+POST http://localhost:4000/api/anomaly/detect
+Content-Type: application/json
+
+{
+  "username": "user1",
+  "action": "delete"
+}
+
+### 4th event - BURST signal triggers (0.30 anomaly score) within 2 seconds
+POST http://localhost:4000/api/anomaly/detect
+Content-Type: application/json
+
+{
+  "username": "user1",
+  "action": "write"
+}
+
+### Notes:
+# - New User Score: 0.60 - triggers on first event for any user
+# - Rare Action Score: 0.40 - triggers when action < 10% of user's events (after 5+ events)
+# - Burst Score: 0.30 - triggers when 2+ events within 2 seconds
+# - Multiple signals can stack (e.g., NEW_USER + BURST = 0.90)
+# - Anomaly scores are capped at 1.0
+# - Baselines persist in-memory; reset on server restart (use Redis for persistence)

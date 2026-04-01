@@ -1,0 +1,41 @@
+### Test Log Watcher API Endpoints
+### Base URL: http://localhost:4000/api
+
+### Check current watcher status
+GET http://localhost:4000/api/watcher/status
+
+### Start log watcher
+POST http://localhost:4000/api/watcher/start
+Content-Type: application/json
+
+{
+  "log_path": "audit.log"
+}
+
+### Process single JSON event through pipeline
+POST http://localhost:4000/api/events/process
+Content-Type: application/json
+
+{
+  "raw_event": "{\"username\":\"testuser\",\"action\":\"write\",\"file\":\"/etc/config\",\"status\":\"denied\"}"
+}
+
+### Process multi-line auditd event
+POST http://localhost:4000/api/events/process
+Content-Type: application/json
+
+{
+  "raw_event": "type=SYSCALL msg=audit(1234567890.123:456): arch=c000003e syscall=85 success=no exit=-13\ntype=PATH msg=audit(1234567890.123:456): item=0 name=\"/etc/shadow\""
+}
+
+### Fetch recent events
+GET http://localhost:4000/api/events/recent?limit=10
+
+### Fetch recent alerts
+GET http://localhost:4000/api/alerts/recent?limit=10
+
+### Stop log watcher
+POST http://localhost:4000/api/watcher/stop
+Content-Type: application/json
+
+{}

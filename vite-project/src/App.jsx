@@ -11,6 +11,8 @@ import Generate from './Generate.jsx';
 import ComplianceReport from "./ComplianceReport.jsx";
 import Attack from './Simulation.jsx';
 import ManageLogs from './ManageLogs.jsx';
+import AlertsPanel from './AlertsPanel.jsx';
+import ReportDownload from './ReportDownload.jsx';
 export default function App() {
   return (
     <Routes>
@@ -26,6 +28,8 @@ export default function App() {
       <Route path='/compliancereport' element={<ComplianceReport/>}/>
       <Route path='/attack' element={<Attack/>}/>
       <Route path='/manage-logs' element={<ManageLogs/>}/>
+      <Route path='/alerts' element={<AlertsPanel/>}/>
+      <Route path='/reports' element={<ReportDownload/>}/>
     </Routes>
   );
 }

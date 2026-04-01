@@ -13,6 +13,8 @@ export default function Admin() {
                     <li onClick={()=>navigate('/audit')}>User Management</li>
                     <li onClick={()=>navigate('/compliancereport')}>Audit Logs</li>
                     <li onClick={()=>navigate('/manage-logs')} style={{color: '#ff6b6b', fontWeight: 'bold'}}>Manage Logs</li>
+                    <li onClick={()=>navigate('/alerts')} style={{color: '#ff0000', fontWeight: 'bold'}}>Security Alerts</li>
+                    <li onClick={()=>navigate('/reports')} style={{color: '#2196F3', fontWeight: 'bold'}}>Download Reports</li>
                     <li onClick={()=>navigate('/attack')}>Simulation</li>
                     <li>AI Insights</li>
                     <li>Settings</li>
