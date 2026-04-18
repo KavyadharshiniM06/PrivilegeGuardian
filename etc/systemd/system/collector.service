@@ -1,0 +1,25 @@
+[Unit]
+Description=PrivilegeGuardian Real-time Audit Collector
+After=network.target auditd.service
+Wants=auditd.service
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/privilegeguardian
+# Set your JWT token below or export PG_TOKEN env var
+EnvironmentFile=-/opt/privilegeguardian/.env
+ExecStart=/usr/bin/node /opt/privilegeguardian/collector.js ${PG_TOKEN} ${PG_API_URL}
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=pg-collector
+# Security hardening
+PrivateTmp=true
+ProtectSystem=strict
+ReadWritePaths=/var/log/audit /var/log
+NoNewPrivileges=false
+
+[Install]
+WantedBy=multi-user.target

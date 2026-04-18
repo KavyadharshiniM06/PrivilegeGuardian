@@ -1,0 +1,16 @@
+# 1. Install auditd + load rules
+sudo bash setup.sh
+
+# 2. Start backend
+cd backend && npm run seed && npm run dev
+
+# 3. Get JWT token
+bash siem-admin.sh get-token admin admin123
+
+# 4. Start real-time collector (needs root for /var/log/audit)
+sudo node collector.js <YOUR_JWT_TOKEN>
+
+# 5. Run as a permanent systemd service
+sudo cp collector.service /etc/systemd/system/
+# Edit /opt/privilegeguardian/.env with PG_TOKEN
+sudo systemctl enable --now pg-collector
